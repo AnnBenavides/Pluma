@@ -7,6 +7,7 @@ public class Cuadro {
 	private boolean esBorde;
 	
 	/** TODO 
+	 * [x] inicializar: default color Blanco
 	 * [x] gets de coordenadas y color
 	 * [x] cambiar color
 	 * [x] tipo borde (Se podria hacer una subclase en vez de un booleano(?))
@@ -14,8 +15,8 @@ public class Cuadro {
 	
 	Cuadro(int x,int y){
 		c = 'B';// parte en blanco
-		i = x;
-		j = y;
+		i = x+1;
+		j = y+1;
 		esBorde();
 	}
 	
@@ -40,7 +41,7 @@ public class Cuadro {
 	}
 
 	private void esBorde(){
-		if(i==1 || i==50 || j==0 || j==50){
+		if(i==1 || i==50 || j==1 || j==50){
 			esBorde = true;
 		} else {
 			esBorde = false;
