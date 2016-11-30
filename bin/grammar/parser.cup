@@ -1,0 +1,71 @@
+/**
+* TODO:
+* Editar el sgte ejemplo **/
+
+
+/* imports para el parser */
+import java_cup.runtime.*;
+import java.util.Scanner;
+import java.io.*;
+
+/* codigo insertado en la clase */
+parser code {:
+ 	protected Lexer lexer;
+
+	public void print(String s) {
+		System.out.println(s);
+	}
+:}
+
+/* c�digo a ejecutar cada vez que se inicializa el parser */
+init with {:
+	/* creacion de simbolos */
+	ComplexSymbolFactory f = new ComplexSymbolFactory();
+ 	symbolFactory = f;
+
+	/* abrir archivo */
+	File file = new File("input.txt");
+	FileInputStream fis = null;
+	try {
+		fis = new FileInputStream(file);
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+
+	/* inicializar el lexer */
+	lexer = new Lexer(f,fis);
+:};
+
+/* metodo para parsear */
+scan with {: return lexer.next_token(); :};
+
+
+/* Declaracion de variables (simbolos) 
+** terminal HOLA; // terminal con valor de tipo Object.
+** terminal String MUNDO; // terminal con valor de tipo String.*/
+terminal bajar-pluma;
+terminal levantar-pluma;
+terminal color-pluma; //?
+terminal direccion-pluma;//?
+terminal 
+
+/* non terminal FRASE; // no terminal. */
+non terminal OP;
+non terminal EXPR;
+non terminal C;
+non terminal D;
+non terminal NUM;
+non terminal DIGIT;
+
+/* Precedencias */
+precedence left HOLA;
+
+start with FRASE;
+
+/*
+Reglas de la gramatica.
+*/
+
+FRASE ::= HOLA MUNDO:m {: print("hola " + m); :};
+
+OP ::=
