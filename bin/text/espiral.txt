@@ -1,0 +1,144 @@
+color-pluma V;
+bajar-pluma;
+avanzar 49;
+direccion-pluma N;
+avanzar 49;
+direccion-pluma O;
+avanzar 49;
+direccion-pluma S;
+avanzar 47;
+direccion-pluma E;
+levantar-pluma;
+
+while not tablero-col V do
+{
+	while pluma-dir E do
+	{
+		avanzar 1;
+		if tablero-col V then
+		{
+			direccion-pluma O;
+			avanzar 2;
+			direccion-pluma N;
+			color-pluma B;
+			bajar-pluma;
+			avanzar 1;
+			levantar-pluma;
+			direccion-pluma S;
+			avanzar 1;
+			color-pluma V;
+			direccion-pluma N
+		}
+		else
+		{
+			direccion-pluma O;
+			avanzar 1;
+			bajar-pluma;
+			direccion-pluma E;
+			avanzar 2;
+			levantar-pluma
+		}
+	};
+
+	while pluma-dir N do
+	{
+		avanzar 1;
+		if tablero-col V then
+		{
+			direccion-pluma S;
+			avanzar 2;
+
+			direccion-pluma O;
+			color-pluma B;
+			bajar-pluma;
+			avanzar 1;
+			levantar-pluma;
+			direccion-pluma E;
+			avanzar 1;
+
+			color-pluma V;
+			direccion-pluma O
+		}
+		else
+		{
+			direccion-pluma S;
+			avanzar 1;
+			bajar-pluma;
+			direccion-pluma N;
+			avanzar 2;
+			levantar-pluma
+		}
+	};
+	
+	avanzar 1;
+	direccion-pluma S;
+	avanzar 1;
+	if not tablero-col V then
+	{
+		direccion-pluma N;
+		avanzar 1;
+		direccion-pluma E;
+		avanzar 1;
+		direccion-pluma O;
+
+		while pluma-dir O do
+		{
+			avanzar 1;
+			if tablero-col V then
+			{
+				direccion-pluma E;
+				avanzar 2;
+
+				direccion-pluma S;
+				color-pluma B;
+				bajar-pluma;
+				avanzar 1;
+				levantar-pluma;
+				direccion-pluma N;
+				avanzar 1;
+
+				color-pluma V;
+				direccion-pluma S
+			}
+			else
+			{
+				direccion-pluma E;
+				avanzar 1;
+				bajar-pluma;
+				direccion-pluma O;
+				avanzar 2;
+				levantar-pluma
+			}
+		};
+
+		while pluma-dir S do
+		{
+			avanzar 1;
+			if tablero-col V then
+			{
+				direccion-pluma N;
+				avanzar 2;
+
+				direccion-pluma E;
+				color-pluma B;
+				bajar-pluma;
+				avanzar 1;
+				levantar-pluma;
+				direccion-pluma O;
+				avanzar 1;
+
+				color-pluma V;
+				direccion-pluma E
+			}
+			else
+			{
+				direccion-pluma N;
+				avanzar 1;
+				bajar-pluma;
+				direccion-pluma S;
+				avanzar 2;
+				levantar-pluma
+			}
+		}
+	}
+}

@@ -1,4 +1,7 @@
-/* TODO: Editar el sgte ejemplo */
+/**
+* TODO:
+* Editar el sgte ejemplo **/
+
 /* ------------------------Codigo copiado al inicio de la clase---------------------- */
 /* Esta seccion contiene codigo que se copiara literalmente al principio de la clase, aqui
 se define el paquete y los import necesarios. */
