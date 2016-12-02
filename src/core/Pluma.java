@@ -89,9 +89,10 @@ public class Pluma {
 	 * @param x		New position in board's x axis.
 	 * @param y		New position in board's y axis.
 	 */
-	public void setPosition(int x, int y) {
+	public boolean setPosition(int x, int y) {
 		posx = x;
 		posy = y;
+		return true;
 	}
 	
 	/**
@@ -101,7 +102,7 @@ public class Pluma {
 	 * 
 	 * @throws IllegalArgumentException		When given argument isn't one of the two valid options.
 	 */
-	public void setMode(String newMode) throws IllegalArgumentException {
+	public boolean setMode(String newMode) throws IllegalArgumentException {
 		if (!validModes.contains(newMode)) {
 			throw new IllegalArgumentException("Mode has to be either 'arriba' or 'abajo'");
 		}
@@ -111,6 +112,7 @@ public class Pluma {
 				board.col(posx, posy, col);
 			}
 		}
+		return true;
 	}
 	
 	/**
@@ -119,12 +121,13 @@ public class Pluma {
 	 * @param color							Quill's color. Has to be either R, V, A, B, or N.
 	 * @throws IllegalArgumentException		When given an invalid color as argument.
 	 */
-	public void setColor(char color) throws IllegalArgumentException {
+	public boolean setColor(char color) throws IllegalArgumentException {
 		if (!validColor.contains(color)) {
 			throw new IllegalArgumentException("Invalid color.\n"
 					+ "Should be either R, V, A, B or N.");
 		}
 		col = color;
+		return true;
 	}
 	
 	/**
@@ -133,12 +136,13 @@ public class Pluma {
 	 * @param direction						Quill's direction. Has to be either S, N, E or O.
 	 * @throws IllegalArgumentException		When given an invalid direction as argument.
 	 */
-	public void setDirection(char direction) throws IllegalArgumentException {
+	public boolean setDirection(char direction) throws IllegalArgumentException {
 		if (!validDir.contains(direction)) {
 			throw new IllegalArgumentException("Invalid direction.\n"
 					+ "Should be either S, N, E, or O.");
 		}
 		dir = direction;
+		return true;
 	}
 	
 	/**

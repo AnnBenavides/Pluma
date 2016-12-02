@@ -28,7 +28,7 @@ parser code {:
 	}
 
 	public void conditional() {
-
+		
 	}
 
 	public boolean booleanValue(Symbol s) {
@@ -37,6 +37,29 @@ parser code {:
 
 	public char charValue(Symbol s) {
 		return (Character) s.value;
+	}
+
+	public boolean ifThen(boolean expr, Callable<boolean> op) {
+		if (expr) {
+			op.call();
+			return true;
+		}
+		return false;
+	}
+
+	public boolean ifThenElse(boolean expr, Callable<boolean> op1, Callable<boolean> op2) {
+		if (expr) {
+			op1.call();
+			return true;
+		} else {
+			op2.call();
+			return false;
+		}
+	}
+
+	public boolean semicolon(Callable<boolean> op1, Callable<boolean> op2) {
+		op1.call();
+		op2.call();
 	}
 :}
 
@@ -98,7 +121,7 @@ terminal OR;
 terminal NOT;
 
 /* non terminal FRASE; // no terminal. */
-non terminal op;
+non terminal Callable<boolean> op;
 non terminal boolean expr;
 
 
@@ -119,14 +142,14 @@ start with op;
 Reglas de la gramatica.
 */
 
-op ::= 	BPLUMA							{: quill.setMode("abajo"); :}
-	|	LPLUMA							{: quill.setMode("arriba"); :}
-	|	CPLUMA C:c 						{: quill.setColor(c); :}
-	|	DPLUMA D:d 						{: quill.setDirection(d); :}
-	|	AVANZAR	NUM:n					{: quill.move(n); :}
-	|	IF expr:e THEN op:o				{: /* TODO */ :}
-	|	IF expr:e THEN op:o1 ELSE op:o2	{: /* TODO */ :}
-	|	op:o1 SEMICOLON op:o2			{: /* TODO */ :}
+op ::= 	BPLUMA							{: RESULT = quill.setMode("abajo"); :}
+	|	LPLUMA							{: RESULT = quill.setMode("arriba"); :}
+	|	CPLUMA C:c 						{: RESULT = quill.setColor(c); :}
+	|	DPLUMA D:d 						{: RESULT = quill.setDirection(d); :}
+	|	AVANZAR	NUM:n					{: RESULT = quill.move(n); :}
+	|	IF expr:e THEN op:o				{: RESULT = ifThen(booleanValue(e), o); :}
+	|	IF expr:e THEN op:o1 ELSE op:o2	{: RESULT = ifThenElse(booleanValue(e), o1, o2); :}
+	|	op:o1 SEMICOLON op:o2			{: RESULT = semicolon(o1, o2); :}
 	;
 	
 expr ::= 	TCOL C:c					{: RESULT = squareColorEquals(c); :}

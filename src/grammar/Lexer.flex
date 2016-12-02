@@ -125,10 +125,15 @@ El orden en el que estan las expresiones define la precedencia de una sobre otra
 "avanzar"					{ return symbol("num", AVANZAR);}
 {num}							{ return symbol("numero", NUM, Integer.parseInt(yytext()));}
 
-/* definir ifs y otros */
+/* definir ifs y otros 
 "if" 			{ yybegin(IF); return symbol(); }
 "then"			{ yybegin(THEN); return symbol(); }
 "else"			{ yybegin(ELSE); return symbol();}
+*/
+
+"if"			{ return symbol("if", IF); }
+"then"			{ return symbol("then", THEN); }
+"else"			{ return symbol("else", ELSE); }
 
 /* definir operadores booleanos */
 "and"			{ return symbol("and", AND); }
