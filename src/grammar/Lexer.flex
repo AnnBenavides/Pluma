@@ -82,7 +82,7 @@ y estados para usar en las expresiones regulares */
 	/* defindir and, or y not */
 	"not"				{ yybegin(NOT); return symbol(); }
 	"and"				{ yybegin(AND); return symbol(); }
-	"or"				{ yybegin(AND); return symbol(); }
+	"or"				{ yybegin(OR); return symbol(); }
 	[^]					{ send_error("error en condicion del IF"); }
 	
 }
