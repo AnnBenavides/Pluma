@@ -1,7 +1,3 @@
-/**
-* TODO:
-* Editar el sgte ejemplo **/
-
 /* ------------------------Codigo copiado al inicio de la clase---------------------- */
 /* Esta seccion contiene codigo que se copiara literalmente al principio de la clase, aqui
 se define el paquete y los import necesarios. */
@@ -70,17 +66,39 @@ y estados para usar en las expresiones regulares */
     return symbol("EOF", EOF); 
 %eofval}
 
-// declaracion de macros para usar en las ER.
-espacio = [ \t\f]
+// MACROS.
+whitespace = [ \n]
+num=[0-9]+
+dir=[SNOE]
+col=[ARVBN]
 
 %%
 /* ------------------------Reglas lexicas---------------------- */
 /* esta seccion contiene expresiones regulares y codigo java asociado que se ejecutara cada vez que se encuentre la expresion. 
 El orden en el que estan las expresiones define la precedencia de una sobre otra. */
 
-"hola"				{ return symbol("HOLA", HOLA); } // genera un simbolo HOLA de cup.
-"mundo" | "mundo!"	{ return symbol("MUNDO", MUNDO, yytext()); } // retorna un simbolo MUNDO de cup con el texto asociado.
+"bajar-pluma"				{ return symbol("bpluma", BPLUMA); } 
+"levantar-pluma"			{ return symbol("lpluma", LPLUMA); }
+"color-pluma"				{ return symbol("col", CPLUMA); }
+{col} 							{ return symbol("c", C, yytext()); }
+"direccion-pluma"			{ return symbol("dir", DPLUMA); }
+{dir}							{ return symbol("d", D, yytext()); }
+"avanzar"					{ return symbol("num", AVANZAR);}
+{num}							{ return symbol("numero", NUM, Integer.parseInt(yytext()));}
 
-{espacio}			{ /* ignorar espacios */ }
+/* definir ifs y otros */
+
+"tablero-col" 		{ return symbol("col", TCOL); }
+{col}					{ return symbol("c", C, yytext()); }
+"borde"				{ return symbol("borde", BORDE); }
+"pluma-dir"			{ return symbol("dir", PDIR); }
+{dir}					{ return symbol("d",D, yytext()); }
+"pluma-col"			{ return symbol("col", PCOL); }
+{col}					{ return symbol("c", C, yytext()); }
+"pluma-arriba"		{ return symbol("parriba", PARRIBA); }
+"pluma-abajo"		{ return symbol("pabajo", PABAJO); }
+
+/* defindir and, or y not */
+{whitespace}			{ ; /* ignorar espacios */ }
 
 [^]					{ send_error("expresion invalida"); }

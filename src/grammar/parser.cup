@@ -43,19 +43,27 @@ scan with {: return lexer.next_token(); :};
 /* Declaracion de variables (simbolos) 
 ** terminal HOLA; // terminal con valor de tipo Object.
 ** terminal String MUNDO; // terminal con valor de tipo String.*/
-terminal bajar-pluma;
-terminal levantar-pluma;
-terminal color-pluma; //?
-terminal direccion-pluma;//?
-terminal 
+terminal C;
+terminal D;
+terminal NUM;
+
+terminal BPLUMA;
+terminal LPLUMA;
+terminal CPLUMA;
+terminal DPLUMA;
+terminal AVANZAR;
+
+terminal TCOL;
+terminal BORDE;
+terminal PDIR;
+terminal PCOL;
+terminal PARRIBA;
+terminal PABAJO;
 
 /* non terminal FRASE; // no terminal. */
 non terminal OP;
 non terminal EXPR;
-non terminal C;
-non terminal D;
-non terminal NUM;
-non terminal DIGIT;
+
 
 /* Precedencias */
 precedence left HOLA;
@@ -68,4 +76,4 @@ Reglas de la gramatica.
 
 FRASE ::= HOLA MUNDO:m {: print("hola " + m); :};
 
-OP ::=
+OP ::= 
