@@ -1,5 +1,7 @@
 package core;
 
+import javax.swing.text.html.parser.Parser;
+
 /** Clase principal donde se corre todo
  * TODO
  * [] recibe como argumento el nombre del archivo de texto
@@ -12,8 +14,7 @@ package core;
 public class Driver {
 
 	public static void main (String [] args){
-		Tablero t= new Tablero();
-		Pluma p= new Pluma();
-		p.setBoard(t);
+		java_cup.parser parser = new  Parser();
+		parser.parse();
 	}
 }
