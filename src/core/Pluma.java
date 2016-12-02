@@ -51,23 +51,25 @@ public class Pluma {
 	/**
 	 * Moves the quill according to its own variables.
 	 * 
-	 * @return		True if the quill was able to move.
-	 * 				False otherwise.
+	 * @param distance		Amount of squares the quill will move.
+	 * 
+	 * @return			True if the quill was able to move.
+	 * 					False otherwise.
 	 */
-	public boolean move() {
+	public boolean move(int distance) {
 		// NullObject Pattern???
 		if (board == null) {
 			return false;
 		}
 		
 		if (dir == 'N') {
-			setPosition(posx, posy + 1);
+			setPosition(posx, posy + distance);
 		} else if (dir == 'S') {
-			setPosition(posx, posy - 1);
+			setPosition(posx, posy - distance);
 		} else if (dir == 'E') {
-			setPosition(posx + 1, posy);
+			setPosition(posx + distance, posy);
 		} else if (dir == 'O') {
-			setPosition(posx - 1, posy);
+			setPosition(posx - distance, posy);
 		}
 		
 		if (!checkValidPosition(posx, posy)) {
@@ -75,8 +77,6 @@ public class Pluma {
 		}
 		
 		if (mod.equals("abajo")) {
-			//DONE use Tablero's painting method.
-			//That method should receive a color
 			board.col(posx, posy, col);
 		}
 		
@@ -106,8 +106,6 @@ public class Pluma {
 			throw new IllegalArgumentException("Mode has to be either 'arriba' or 'abajo'");
 		}
 		mod = newMode;
-		/*TODO if mode is set "abajo", the quill will immediately paint the current square
-		 *from the board */
 		board.col(posx, posy, col);
 	}
 	
