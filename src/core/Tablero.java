@@ -26,7 +26,7 @@ public class Tablero {
 		return grid[x][y].borde();
 	}
 	
-	private char getCol(int x, int y){
+	public char getCol(int x, int y){
 		return grid[x][y].getcol();
 	}
 	

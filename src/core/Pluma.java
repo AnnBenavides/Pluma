@@ -105,8 +105,12 @@ public class Pluma {
 		if (!validModes.contains(newMode)) {
 			throw new IllegalArgumentException("Mode has to be either 'arriba' or 'abajo'");
 		}
-		mod = newMode;
-		board.col(posx, posy, col);
+		if (!newMode.equals(mod)) {
+			mod = newMode;
+			if (mod.equals("abajo")) {
+				board.col(posx, posy, col);
+			}
+		}
 	}
 	
 	/**
@@ -149,6 +153,51 @@ public class Pluma {
 			return;
 		}
 		board = newBoard;
+	}
+	
+	/**
+	 * Gets quill's position in x axis.
+	 * 
+	 * @return	Quill's current position in board's x axis.
+	 */
+	public int getPosX() {
+		return posx;
+	}
+	
+	/**
+	 * Gets quill's position in y axis.
+	 * 
+	 * @return	Quill's current position in board's y axis.
+	 */
+	public int getPosY() {
+		return posy;
+	}
+	
+	/**
+	 * Gets quill's direction.
+	 * 
+	 * @return	Quill's direction. Has to be either S, N, E or O.
+	 */
+	public char getDirection() {
+		return dir;
+	}
+	
+	/**
+	 * Gets quill's color.
+	 * 
+	 * @return	Quill's color. Has to be either R, V, A, B, or N.
+	 */
+	public char getColor() {
+		return col;
+	}
+	
+	/**
+	 * Gets quill's mode.
+	 * 
+	 * @return	A string representing quill's mode ("arriba" or "abajo")
+	 */
+	public String getMode() {
+		return mod;
 	}
 
 	public void P(int i, int j, char c, String m, char d){

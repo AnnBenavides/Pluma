@@ -130,5 +130,10 @@ El orden en el que estan las expresiones define la precedencia de una sobre otra
 "then"			{ yybegin(THEN); return symbol(); }
 "else"			{ yybegin(ELSE); return symbol();}
 
+/* definir operadores booleanos */
+"and"			{ return symbol("and", AND); }
+"or"			{ return symbol("or", OR); }
+"not"			{ return symbol("not", NOT); }
+
 {whitespace}			{; /* ignorar espacios */ }
 [^]					{ send_error("expresion invalida"); }

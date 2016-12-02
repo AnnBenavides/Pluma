@@ -4,17 +4,30 @@
 
 
 /* imports para el parser */
+package grammar;
+
 import java_cup.runtime.*;
 import java.util.Scanner;
 import java.io.*;
 
+import core.*;
+
 /* codigo insertado en la clase */
 parser code {:
  	protected Lexer lexer;
+	protected Pluma quill;
+	protected Tablero board;
 
 	public void print(String s) {
 		System.out.println(s);
 	}
+
+	public boolean squareColorEquals(char color) {
+		char c = board.getCol(quill.getPosX, quill.getPosY);
+		return (c == color);
+	}
+
+	public void conditional(
 :}
 
 /* c�digo a ejecutar cada vez que se inicializa el parser */
@@ -34,46 +47,85 @@ init with {:
 
 	/* inicializar el lexer */
 	lexer = new Lexer(f,fis);
+
+	/* inicializar la pluma y el tablero */
+	board = new Tablero();
+	quill = new Pluma();
+	quill.setBoard(board);
 :};
 
 /* metodo para parsear */
 scan with {: return lexer.next_token(); :};
 
 
-/* Declaracion de variables (simbolos) 
-** terminal HOLA; // terminal con valor de tipo Object.
-** terminal String MUNDO; // terminal con valor de tipo String.*/
-terminal C;
-terminal D;
-terminal NUM;
+/* Declaracion de variables (simbolos) */
 
-terminal BPLUMA;
-terminal LPLUMA;
-terminal CPLUMA;
-terminal DPLUMA;
-terminal AVANZAR;
+// ELEMENTOS
+terminal C;			// color
+terminal D;			// direccion
+terminal Integer NUM;		// numero (seteado en lexer)
 
-terminal TCOL;
-terminal BORDE;
-terminal PDIR;
-terminal PCOL;
-terminal PARRIBA;
-terminal PABAJO;
+// OPERACIONES (setean cosas)
+terminal BPLUMA;	// bajar-pluma
+terminal LPLUMA;	// levantar-pluma
+terminal CPLUMA;	// color-pluma
+terminal DPLUMA;	// direccion-pluma
+terminal AVANZAR;	// avanzar
+
+// EXPRESIONES (retornan valores booleanos)
+terminal TCOL;		// tablero-col
+terminal BORDE;		// borde
+terminal PDIR;		// pluma-dir
+terminal PCOL;		// pluma-col
+terminal PARRIBA;	// pluma-arriba
+terminal PABAJO;	// pluma-abajo
+terminal AND;
+terminal OR;
+terminal NOT;
+terminal IF;
+terminal THEN;
+terminal ELSE;
+terminal SEMICOLON;
 
 /* non terminal FRASE; // no terminal. */
-non terminal OP;
-non terminal EXPR;
+non terminal op;
+non terminal boolean expr;
 
 
 /* Precedencias */
-precedence left HOLA;
+precedence left SEMICOLON; //???
 
-start with FRASE;
+precedence left AND, OR;
+precedence left NOT;
+
+precedence left ELSE;
+precedence left THEN;
+precedence left IF;
+
+
+start with op;
 
 /*
 Reglas de la gramatica.
 */
 
-FRASE ::= HOLA MUNDO:m {: print("hola " + m); :};
-
-OP ::= 
+op ::= 	BPLUMA							{: quill.setMode("abajo"); :}
+	|	LPLUMA							{: quill.setMode("arriba"); :}
+	|	CPLUMA C:c 						{: quill.setColor(c); :}
+	|	DPLUMA D:d 						{: quill.setDirection(d); :}
+	|	AVANZAR	NUM:n					{: quill.move(n); :}
+	|	IF expr:e THEN op:o				{: /* TODO */ :}
+	|	IF expr:e THEN op:o1 ELSE op:o2	{: /* TODO */ :}
+	|	op SEMICOLON op					{: /* TODO */ :}
+	;
+	
+expr ::= 	TCOL C:c					{: RESULT = squareColorEquals(c); :}
+	  |		BORDE						{: RESULT = board.borde(quill.getPosX, quill.getPosY); :}
+	  |		PDIR D:d					{: RESULT = (quill.getDirection() == d); :}
+	  |		PCOL C:c					{: RESULT = (quill.getColor() == c); :}
+	  |		PARRIBA						{: RESULT = (quill.getMode().equals("arriba")); :}
+	  |		PABAJO						{: RESULT = (quill.getMode().equals("abajo")); :}
+	  |		expr:e1 AND expr:e2			{: RESULT = (e1.booleanValue() && e2.booleanValue()); :}
+	  |		expr:e1 OR expr:e2			{: RESULT = (e1.booleanValue() || e2.booleanValue()); :}
+	  |		NOT expr:e					{: RESULT = !e.booleanValue(); :}
+	  ;
