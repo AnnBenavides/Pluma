@@ -66,44 +66,6 @@ y estados para usar en las expresiones regulares */
     return symbol("EOF", EOF); 
 %eofval}
 
-// STATE declarations
-%xstate EXPR, IF, THEN, ELSE
-<EXPR>{
-	"tablero-col" 		{ return symbol("col", TCOL) }
-	{col}					{ return symbol("c", C, yytext()) }
-	"borde"				{ return symbol("borde", BORDE) }
-	"pluma-dir"			{ return symbol("dir", PDIR) }
-	{dir}					{ return symbol("d",D, yytext()) }
-	"pluma-col"			{ return symbol("col", PCOL) }
-	{col}					{ return symbol("c", C, yytext()) }
-	"pluma-arriba"		{ return symbol("parriba", PARRIBA) }
-	"pluma-abajo"		{ return symbol("pabajo", PABAJO) }
-	{whitespace}			{ /* ignorar espacios */ }
-	/* defindir and, or y not */
-	"not"				{ yybegin(NOT); return symbol(); }
-	"and"				{ yybegin(AND); return symbol(); }
-	"or"				{ yybegin(OR); return symbol(); }
-	[^]					{ send_error("error en condicion del IF"); }
-	
-}
-<IF>{	
-	[]			{ yybegin(EXPR); return symbol();}
-}
-<THEN>{
-	[]			{ yybegin(EXPR); return symbol();}
-}
-<ELSE>{
-	[]			{ yybegin(EXPR); return symbol();}
-}
-<NOT>{
-	[] { yybegin(EXPR); return symbol(); }
-}
-<AND>{
-	[] { yybegin(EXPR); return symbol(); }
-}
-<OR>{
-	[] { yybegin(EXPR); return symbol(); }
-}
 // MACRO
 whitespace = [ \n]
 [a-zA-Z]+
@@ -125,10 +87,23 @@ El orden en el que estan las expresiones define la precedencia de una sobre otra
 "avanzar"					{ return symbol("num", AVANZAR);}
 {num}							{ return symbol("numero", NUM, Integer.parseInt(yytext()));}
 
-/* definir ifs y otros */
+/* definir ifs y otros 
 "if" 			{ yybegin(IF); return symbol(); }
 "then"			{ yybegin(THEN); return symbol(); }
 "else"			{ yybegin(ELSE); return symbol();}
+*/
+
+"if"			{ return symbol("if", IF); }
+"then"			{ return symbol("then", THEN); }
+"else"			{ return symbol("else", ELSE); }
+
+/* definir operadores booleanos */
+"and"			{ return symbol("and", AND); }
+"or"			{ return symbol("or", OR); }
+"not"			{ return symbol("not", NOT); }
+
+/* else */
+";"				{ return symbol("semicolon", SEMICOLON); }
 
 {whitespace}			{; /* ignorar espacios */ }
 [^]					{ send_error("expresion invalida"); }
