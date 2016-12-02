@@ -27,7 +27,13 @@ parser code {:
 		return (c == color);
 	}
 
-	public void conditional(
+	public void conditional() {
+
+	}
+
+	public boolean booleanValue(Symbol s) {
+		return (boolean) s.value;
+	}
 :}
 
 /* c�digo a ejecutar cada vez que se inicializa el parser */
@@ -125,7 +131,7 @@ expr ::= 	TCOL C:c					{: RESULT = squareColorEquals(c); :}
 	  |		PCOL C:c					{: RESULT = (quill.getColor() == c); :}
 	  |		PARRIBA						{: RESULT = (quill.getMode().equals("arriba")); :}
 	  |		PABAJO						{: RESULT = (quill.getMode().equals("abajo")); :}
-	  |		expr:e1 AND expr:e2			{: RESULT = (e1.booleanValue() && e2.booleanValue()); :}
-	  |		expr:e1 OR expr:e2			{: RESULT = (e1.booleanValue() || e2.booleanValue()); :}
-	  |		NOT expr:e					{: RESULT = !e.booleanValue(); :}
+	  |		expr:e1 AND expr:e2			{: RESULT = (booleanValue(e1) && booleanValue(e2)); :}
+	  |		expr:e1 OR expr:e2			{: RESULT = (booleanValue(e1) || booleanValue(e2)); :}
+	  |		NOT expr:e					{: RESULT = !booleanValue(e); :}
 	  ;
