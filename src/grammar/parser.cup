@@ -34,6 +34,10 @@ parser code {:
 	public boolean booleanValue(Symbol s) {
 		return (boolean) s.value;
 	}
+
+	public char charValue(Symbol s) {
+		return (Character) s.value;
+	}
 :}
 
 /* c�digo a ejecutar cada vez que se inicializa el parser */
@@ -67,8 +71,8 @@ scan with {: return lexer.next_token(); :};
 /* Declaracion de variables (simbolos) */
 
 // ELEMENTOS
-terminal C;			// color
-terminal D;			// direccion
+terminal Character C;			// color
+terminal Character D;			// direccion
 terminal Integer NUM;		// numero (seteado en lexer)
 
 // OPERACIONES (setean cosas)
@@ -77,6 +81,10 @@ terminal LPLUMA;	// levantar-pluma
 terminal CPLUMA;	// color-pluma
 terminal DPLUMA;	// direccion-pluma
 terminal AVANZAR;	// avanzar
+terminal IF;
+terminal THEN;
+terminal ELSE;
+terminal SEMICOLON;
 
 // EXPRESIONES (retornan valores booleanos)
 terminal TCOL;		// tablero-col
@@ -88,10 +96,6 @@ terminal PABAJO;	// pluma-abajo
 terminal AND;
 terminal OR;
 terminal NOT;
-terminal IF;
-terminal THEN;
-terminal ELSE;
-terminal SEMICOLON;
 
 /* non terminal FRASE; // no terminal. */
 non terminal op;
@@ -122,7 +126,7 @@ op ::= 	BPLUMA							{: quill.setMode("abajo"); :}
 	|	AVANZAR	NUM:n					{: quill.move(n); :}
 	|	IF expr:e THEN op:o				{: /* TODO */ :}
 	|	IF expr:e THEN op:o1 ELSE op:o2	{: /* TODO */ :}
-	|	op SEMICOLON op					{: /* TODO */ :}
+	|	op:o1 SEMICOLON op:o2			{: /* TODO */ :}
 	;
 	
 expr ::= 	TCOL C:c					{: RESULT = squareColorEquals(c); :}

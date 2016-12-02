@@ -135,5 +135,8 @@ El orden en el que estan las expresiones define la precedencia de una sobre otra
 "or"			{ return symbol("or", OR); }
 "not"			{ return symbol("not", NOT); }
 
+/* else */
+";"				{ return symbol("semicolon", SEMICOLON); }
+
 {whitespace}			{; /* ignorar espacios */ }
 [^]					{ send_error("expresion invalida"); }
