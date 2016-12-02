@@ -32,9 +32,20 @@ public class Pluma {
 		setDirection('N');
 	}
 	
+	/**
+	 * Use methods of Tablero class
+	 * to get the dimensions of the grid
+	 * getMaxX() & getMaxY()
+	 * 
+	 * @return		True if the position is on the board
+	 * 				False if it's off the board
+	 * **/
 	private boolean checkValidPosition(int x, int y) {
-		//TODO it's required a getter for board's dimensions.
-		return true;
+		if (x > board.getMaxX() | x < 1 | y > board.getMaxY() | y < 0){
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	/**
@@ -64,8 +75,9 @@ public class Pluma {
 		}
 		
 		if (mod.equals("abajo")) {
-			//TODO use Tablero's painting method.
-			//That method should receive a color.
+			//DONE use Tablero's painting method.
+			//That method should receive a color
+			board.col(posx, posy, col);
 		}
 		
 		return true;
@@ -96,6 +108,7 @@ public class Pluma {
 		mod = newMode;
 		/*TODO if mode is set "abajo", the quill will immediately paint the current square
 		 *from the board */
+		board.col(posx, posy, col);
 	}
 	
 	/**
@@ -138,5 +151,9 @@ public class Pluma {
 			return;
 		}
 		board = newBoard;
+	}
+
+	public void P(int i, int j, char c, String m, char d){
+		// TODO execute all orders needed to get the given set of parameters
 	}
 }

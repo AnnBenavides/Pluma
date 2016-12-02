@@ -45,4 +45,12 @@ public class Tablero {
 		}
 		return str.toString();
 	}
+	
+	public int getMaxX(){
+		return maxX;
+	}
+	
+	public int getMaxY(){
+		return maxY;
+	}
 }
