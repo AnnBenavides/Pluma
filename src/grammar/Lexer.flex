@@ -66,44 +66,6 @@ y estados para usar en las expresiones regulares */
     return symbol("EOF", EOF); 
 %eofval}
 
-// STATE declarations
-%xstate EXPR, IF, THEN, ELSE
-<EXPR>{
-	"tablero-col" 		{ return symbol("col", TCOL) }
-	{col}					{ return symbol("c", C, yytext()) }
-	"borde"				{ return symbol("borde", BORDE) }
-	"pluma-dir"			{ return symbol("dir", PDIR) }
-	{dir}					{ return symbol("d",D, yytext()) }
-	"pluma-col"			{ return symbol("col", PCOL) }
-	{col}					{ return symbol("c", C, yytext()) }
-	"pluma-arriba"		{ return symbol("parriba", PARRIBA) }
-	"pluma-abajo"		{ return symbol("pabajo", PABAJO) }
-	{whitespace}			{ /* ignorar espacios */ }
-	/* defindir and, or y not */
-	"not"				{ yybegin(NOT); return symbol(); }
-	"and"				{ yybegin(AND); return symbol(); }
-	"or"				{ yybegin(OR); return symbol(); }
-	[^]					{ send_error("error en condicion del IF"); }
-	
-}
-<IF>{	
-	[]			{ yybegin(EXPR); return symbol();}
-}
-<THEN>{
-	[]			{ yybegin(EXPR); return symbol();}
-}
-<ELSE>{
-	[]			{ yybegin(EXPR); return symbol();}
-}
-<NOT>{
-	[] { yybegin(EXPR); return symbol(); }
-}
-<AND>{
-	[] { yybegin(EXPR); return symbol(); }
-}
-<OR>{
-	[] { yybegin(EXPR); return symbol(); }
-}
 // MACRO
 whitespace = [ \n]
 [a-zA-Z]+
