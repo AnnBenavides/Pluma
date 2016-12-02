@@ -25,10 +25,10 @@ public class Pluma {
 	
 	private Tablero board;	//the board in which the quill's painting
 	
-	public Pluma(char color) {
+	public Pluma() {
 		setPosition(1, 1);
 		setMode("arriba");
-		setColor(color);
+		setColor('B');
 		setDirection('N');
 	}
 	
