@@ -87,17 +87,20 @@ El orden en el que estan las expresiones define la precedencia de una sobre otra
 "avanzar"					{ return symbol("num", AVANZAR);}
 {num}							{ return symbol("numero", NUM, Integer.parseInt(yytext()));}
 
-/* definir ifs y otros 
-"if" 			{ yybegin(IF); return symbol(); }
-"then"			{ yybegin(THEN); return symbol(); }
-"else"			{ yybegin(ELSE); return symbol();}
-*/
-
 "if"			{ return symbol("if", IF); }
 "then"			{ return symbol("then", THEN); }
 "else"			{ return symbol("else", ELSE); }
 
 /* definir operadores booleanos */
+"tablero-col" 		{ return symbol("col", TCOL) }
+{col}					{ return symbol("c", C, yytext()) }
+"borde"				{ return symbol("borde", BORDE) }
+"pluma-dir"			{ return symbol("dir", PDIR) }
+{dir}					{ return symbol("d",D, yytext()) }
+"pluma-col"			{ return symbol("col", PCOL) }
+{col}					{ return symbol("c", C, yytext()) }
+"pluma-arriba"		{ return symbol("parriba", PARRIBA) }
+"pluma-abajo"		{ return symbol("pabajo", PABAJO) }
 "and"			{ return symbol("and", AND); }
 "or"			{ return symbol("or", OR); }
 "not"			{ return symbol("not", NOT); }
