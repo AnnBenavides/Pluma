@@ -27,10 +27,6 @@ parser code {:
 		return (c == color);
 	}
 
-	public void conditional() {
-		
-	}
-
 	public boolean booleanValue(Symbol s) {
 		return (boolean) s.value;
 	}
@@ -60,6 +56,14 @@ parser code {:
 	public boolean semicolon(Callable<boolean> op1, Callable<boolean> op2) {
 		op1.call();
 		op2.call();
+	}
+
+	public boolean moveQuill(int d) {
+		if(quill.move(d)) {
+			return true;
+		} else {
+			//TODO stop the parser
+		}
 	}
 :}
 
@@ -146,7 +150,7 @@ op ::= 	BPLUMA							{: RESULT = quill.setMode("abajo"); :}
 	|	LPLUMA							{: RESULT = quill.setMode("arriba"); :}
 	|	CPLUMA C:c 						{: RESULT = quill.setColor(c); :}
 	|	DPLUMA D:d 						{: RESULT = quill.setDirection(d); :}
-	|	AVANZAR	NUM:n					{: RESULT = quill.move(n); :}
+	|	AVANZAR	NUM:n					{: RESULT = moveQuill(n); :}
 	|	IF expr:e THEN op:o				{: RESULT = ifThen(booleanValue(e), o); :}
 	|	IF expr:e THEN op:o1 ELSE op:o2	{: RESULT = ifThenElse(booleanValue(e), o1, o2); :}
 	|	op:o1 SEMICOLON op:o2			{: RESULT = semicolon(o1, o2); :}
