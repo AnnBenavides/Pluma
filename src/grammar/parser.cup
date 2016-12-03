@@ -8,9 +8,10 @@ package grammar;
 
 import java_cup.runtime.*;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 import java.io.*;
 
-import core.*;
+import Pluma.core.*;
 
 /* codigo insertado en la clase */
 parser code {:
@@ -125,7 +126,7 @@ terminal OR;
 terminal NOT;
 
 /* non terminal FRASE; // no terminal. */
-non terminal Callable<boolean> op;
+non terminal boolean op;
 non terminal boolean expr;
 
 
@@ -146,14 +147,14 @@ start with op;
 Reglas de la gramatica.
 */
 
-op ::= 	BPLUMA							{: RESULT = quill.setMode("abajo"); :}
-	|	LPLUMA							{: RESULT = quill.setMode("arriba"); :}
-	|	CPLUMA C:c 						{: RESULT = quill.setColor(c); :}
-	|	DPLUMA D:d 						{: RESULT = quill.setDirection(d); :}
-	|	AVANZAR	NUM:n					{: RESULT = moveQuill(n); :}
-	|	IF expr:e THEN op:o				{: RESULT = ifThen(booleanValue(e), o); :}
-	|	IF expr:e THEN op:o1 ELSE op:o2	{: RESULT = ifThenElse(booleanValue(e), o1, o2); :}
-	|	op:o1 SEMICOLON op:o2			{: RESULT = semicolon(o1, o2); :}
+op ::= 	BPLUMA							{: quill.setMode("abajo"); :}
+	|	LPLUMA							{: quill.setMode("arriba"); :}
+	|	CPLUMA C:c 						{: quill.setColor(c); :}
+	|	DPLUMA D:d 						{: quill.setDirection(d); :}
+	|	AVANZAR	NUM:n					{: moveQuill(n); :}
+	|	IF expr:e THEN op:o				{: ifThen(booleanValue(e), o); :}
+	|	IF expr:e THEN op:o1 ELSE op:o2	{: ifThenElse(booleanValue(e), o1, o2); :}
+	|	op:o1 SEMICOLON op:o2			{: semicolon(o1, o2); :}
 	;
 	
 expr ::= 	TCOL C:c					{: RESULT = squareColorEquals(c); :}

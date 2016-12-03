@@ -73,7 +73,6 @@ public class Pluma {
 		}
 		
 		if (!checkValidPosition(posx, posy)) {
-			//TODO abort program.
 			return false;
 		}
 		
